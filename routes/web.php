@@ -23,7 +23,10 @@ Route::get('/', function () {
 
 
 Route::get('/jobs', function () {
-    $jobs = Job::with("employer")->get(); //eager loading
+    // $jobs = Job::with("employer")->get(); //eager loading
+    // $jobs = Job::with("employer")->paginate(6); //pagination
+    $jobs = Job::with("employer")->simplePaginate(6); //pagination
+    // $jobs = Job::with("employer")->cursorPaginate(6); //pagination
 
     return view('jobs', [
         'jobs' => $jobs,
