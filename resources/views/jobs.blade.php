@@ -4,12 +4,17 @@
     </x-slot:heading>
 
 
-    @foreach ($jobs as $job)
-        <li class=" list-none">
-            <a href="{{ route('jobs.details', $job['id']) }}">
-                <strong>{{ $job['title'] }}</strong>
+    <div class="space-y-4">
+
+        @foreach ($jobs as $job)
+            <a href="{{ route('jobs.details', $job['id']) }}" class=" block p-6 border border-gray-800">
+                <div class=" text-blue-400 text-sm font-semibold">{{ $job->employer->name }}</div>
+
+                <h1>{{ $job['title'] }}</h1>
+
+
             </a>
-        </li>
-    @endforeach
+        @endforeach
+    </div>
 
 </x-layout>

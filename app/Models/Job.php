@@ -2,45 +2,29 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Arr;
 
 
 
-class Job
+class Job extends Model
 {
-    public static function  all(): array
+    //must be use to generate random;
+    use HasFactory;
+
+    protected $table = "job_listings";
+    protected $fillable = ['title', 'salary'];
+
+    public function employer()
     {
-        return [
-            [
-                'id' => '1',
-                'title' => 'Director',
-                'salary' => '$50,000',
-            ],
-            [
-                'id' => '2',
-                'title' => 'Programmer',
-                'salary' => '$80,000',
-            ],
-            [
-                'id' => '3',
-                'title' => 'Editor',
-                'salary' => '$100,000',
-            ]
-        ];
+        return $this->belongsTo(Employer::class);
     }
 
 
-    public static function find($id): array
+
+    public function tags()
     {
-        $job =  Arr::first(static::all(), fn($job) => $job['id'] == $id);
-
-        // return !$job ? abort(404) : $job;
-
-        //i preferred this for readability
-        if (! $job) {
-            abort(404);
-        } else {
-            return $job;
-        }
+        return $this->belongsToMany(Tag::class, foreignPivotKey: "job_listing_id");
     }
 }
